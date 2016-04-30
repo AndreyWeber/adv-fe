@@ -1,0 +1,19 @@
+{
+  "name": "adv-fe-home-task-node",
+  "version": "1.0.0",
+  "description": "Advanced Front-End cources home task project (Node.js)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyWeber/adv-fe.git"
+  },
+  "author": "Andrey Weber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyWeber/adv-fe/issues"
+  },
+  "homepage": "https://github.com/AndreyWeber/adv-fe#readme"
+}
