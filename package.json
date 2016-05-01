@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/AndreyWeber/adv-fe/issues"
   },
-  "homepage": "https://github.com/AndreyWeber/adv-fe#readme"
+  "homepage": "https://github.com/AndreyWeber/adv-fe#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "run-sequence": "^1.1.5"
+  }
 }
