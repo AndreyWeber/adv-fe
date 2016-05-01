@@ -1,10 +1,14 @@
 {
-  "name": "adv-fe-home-task-node",
+  "name": "adv-fe-home-task-nodejs",
   "version": "1.0.0",
-  "description": "Advanced Front-End cources home task project (Node.js)",
-  "main": "index.js",
+  "description": "Advanced Front-End courses home task project (Node.js)",
+  "main": "app.js",
+  "config": {
+    "port": "3000"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
