@@ -1,0 +1,29 @@
+{
+  "name": "adv-fe-home-task-nodejs",
+  "version": "1.0.0",
+  "description": "Advanced Front-End courses home task project (Node.js)",
+  "main": "app.js",
+  "config": {
+    "port": "3000"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyWeber/adv-fe.git"
+  },
+  "author": "Andrey Weber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyWeber/adv-fe/issues"
+  },
+  "homepage": "https://github.com/AndreyWeber/adv-fe#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "run-sequence": "^1.1.5"
+  }
+}
