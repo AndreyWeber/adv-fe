@@ -207,3 +207,14 @@ a {
 .comment {
     margin: 10px 0;
 }
+
+.striped-table > div {
+    border: 1px solid #d3d3d3;
+    padding: 15px 25px;
+}
+.striped-table__odd-row {
+    background-color: #ffffff;
+}
+.striped-table__even-row {
+    background-color: #d3d3d3;
+}

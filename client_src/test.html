@@ -17,6 +17,10 @@
                     <h3>Formatted JSON output</h3>
                     <div class="json-container__json"></div>
                 </div>
+                <div class="striped-table-container">
+                    <h3>Striped table output</h3>
+                    <div class="striped-table-container__table"></div>
+                </div>
             </div>
 
             <div class="footer"></div>
@@ -26,6 +30,14 @@
         <script type="text/x-handlebars-template" id="json-print-template">
             <div class="json-print">
                 {{json jsonObj}}
+            </div>
+        </script>
+
+        <script type="text/x-handlebars-template" id="striped-table-template">
+            <div class="striped-table">
+                {{#stripedTable users oddRowClass="striped-table__odd-row" evenRowClass="striped-table__even-row"}}
+                    <b>{{~name~}}</b>&nbsp;<i>&lt;{{~email~}}&gt</i>;
+                {{/stripedTable}}
             </div>
         </script>
 
