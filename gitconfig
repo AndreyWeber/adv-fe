@@ -1,0 +1,11 @@
+[user]
+  name = Andrey Weber
+  email = Andrey.Weber@gmail.com
+[alias]
+  st = status
+  b = branch
+  cia = commit -a
+  co = checkout
+  prom = pull --rebase origin master
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  hist = log --pretty=format:'%C(yellow)%h%C(reset) %ad | %C(75)%s%C(reset) %C(yellow)%d%C(reset) [%an]' --graph --date=short --branches --all
