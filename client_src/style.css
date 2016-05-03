@@ -213,8 +213,8 @@ a {
     padding: 15px 25px;
 }
 .striped-table__odd-row {
-    background-color: #ffffff;
+    background-color: #d3d3d3;
 }
 .striped-table__even-row {
-    background-color: #d3d3d3;
+    background-color: #ffffff;
 }

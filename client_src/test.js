@@ -39,7 +39,7 @@ $(function () {
         }
 
         var result = context.map(function (item, idx) {
-            var rowClass = (idx + 1) % 2
+            var rowClass = idx % 2
                 ? options.hash.oddRowClass
                 : options.hash.evenRowClass;
 
