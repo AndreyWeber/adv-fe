@@ -8,7 +8,7 @@ $(function () {
             return;
         }
 
-        $('.json-container__json').html(template({
+        $('.json-container').html(template({
             jsonObj: users
         }));
     }
@@ -18,7 +18,7 @@ $(function () {
             return;
         }
 
-        $('.striped-table-container__table').html(template({
+        $('.striped-table-container').html(template({
             users: users
         }));
     }
@@ -35,15 +35,11 @@ $(function () {
 
     function renderStripedTableHelper (context, options) {
         if (!context) {
-            return new Handlebars.SafeString('<div class="striped-table__odd-row"><i>&lt;Empty striped table&gt;</i></div>')
+            return new Handlebars.SafeString('<div class="striped-table__row"><i>&lt;Empty striped table&gt;</i></div>')
         }
 
-        var result = context.map(function (item, idx) {
-            var rowClass = idx % 2
-                ? options.hash.oddRowClass
-                : options.hash.evenRowClass;
-
-            return '<div class="' + rowClass + '">' + options.fn(item).trim() + '</div>';
+        var result = context.map(function (item) {
+            return options.fn(item).trim();
         }).join("\n");
 
         return new Handlebars.SafeString(result);
