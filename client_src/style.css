@@ -208,13 +208,15 @@ a {
     margin: 10px 0;
 }
 
-.striped-table > div {
+/*
+    Home task styles
+*/
+.striped-table__row {
     border: 1px solid #d3d3d3;
     padding: 15px 25px;
-}
-.striped-table__odd-row {
     background-color: #d3d3d3;
 }
-.striped-table__even-row {
+
+.striped-table__row:nth-child(2n+0) {
     background-color: #ffffff;
 }
