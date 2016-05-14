@@ -1,8 +1,8 @@
 **/node_modules/
 **/client_build/
 **/libs
-*.swp
-*.log
-tmp
-.DS_Store
-.idea
+**/.idea
+**/*.swp
+**/*.log
+**/tmp
+**/.DS_Store
