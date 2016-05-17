@@ -2,13 +2,20 @@
 
 const destDir = 'bin';
 
+// A.W.: Due to home task conditions I cannot imagine how to
+// implement this gulp task without negations. Have to be
+// discussed
+const htmlMatch = ['*.html', '!node_modules/**', '!libs/**', '!bin/**'];
+const imagesMatch = 'images/**/*.{png,jpg,svg}';
+const stylesMatch = 'styles/**/*.less';
+const jsMatch = 'js/**/*.js';
+
 const gulp = require('gulp');
 const bower = require('gulp-bower');
 const gulpIf = require('gulp-if');
 const concat = require('gulp-concat');
 const less = require('gulp-less');
 const argv = require('yargs').argv;
-const debug = require( 'gulp-debug' );
 const clean = require( 'gulp-clean' );
 const livereload = require('gulp-livereload');
 const csscomb = require('gulp-csscomb');
@@ -21,6 +28,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
 const autoprefixer= require('gulp-autoprefixer');
+
+// Commented to reduce load time. Uncomment on demand
+// const debug = require( 'gulp-debug' );
 
 gulp.task('default', function () {
     runSequence('clean', 'build', 'watch');
@@ -37,25 +47,22 @@ gulp.task('bower', function () {
     return bower('libs');
 });
 
-// A.W.: Due to home task conditions I cannot imagine how to
-// implement this gulp task without negations. Have to be
-// discussed
+
 gulp.task('images', function () {
-    return gulp.src(['**/*.{png,jpg,svg}', '!node_modules/**', '!libs/**', '!bin/**'])
-        .pipe(gulp.dest(destDir))
+    return gulp.src(imagesMatch)
+        .pipe(gulp.dest(destDir + '/images/'))
         .pipe(livereload());
 });
 
-// A.W.: Same as for 'images' task above. How to avoid negations?
 gulp.task('html', function () {
-    return gulp.src(['**/*.html', '!node_modules/**', '!libs/**', '!bin/**'])
+    return gulp.src(htmlMatch)
         .pipe(gulpIf(argv.prod, htmlmin({ collapseWhitespace: true })))
         .pipe(gulp.dest(destDir))
         .pipe(livereload());
 });
 
 gulp.task('css', function () {
-    return gulp.src('styles/**/*.less')
+    return gulp.src(stylesMatch)
         .pipe(concat('styles.css'))
         .pipe(less())
         .pipe(gulpIf(argv.prod, sourcemaps.init()))
@@ -67,7 +74,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('js', function () {
-    return gulp.src('js/**/*.js')
+    return gulp.src(jsMatch)
         .pipe(concat('script.js'))
         .pipe(gulpIf(argv.prod, sourcemaps.init()))
         .pipe(uglify().on('error', handleError))
@@ -85,27 +92,25 @@ gulp.task( 'clean', function () {
         .pipe(clean({ force: true }));
 } );
 
-// A.W.: Again negations
-gulp.task( 'watch', function () {
-    gulp.watch(['**/*.{png,jpg,svg}', '!node_modules/**', '!libs/**', '!bin/**'], ['images']);
-    gulp.watch(['**/*.html', '!node_modules/**', '!libs/**', '!bin/**'], ['html']);
-    gulp.watch('styles/**/*.less', ['css']);
-    gulp.watch('js/**/*.js', ['js']);
+gulp.task('watch', function () {
+    gulp.watch(imagesMatch, ['images']);
+    gulp.watch(htmlMatch, ['html']);
+    gulp.watch(stylesMatch, ['css']);
+    gulp.watch(jsMatch, ['js']);
 } );
 
 // CODESTYLE //
 
 gulp.task('csscomb', function () {
-    return gulp.src('styles/*.less')
+    return gulp.src(stylesMatch)
         .pipe(csscomb('.csscomb.json').on('error', handleError))
         .pipe(gulp.dest(function (file) {
             return file.base;
         }));
 });
 
-// A.W.: Again negations
 gulp.task('htmlhint', function () {
-    return gulp.src(['**/*.html', '!node_modules/**', '!libs/**', '!bin/**'])
+    return gulp.src(htmlMatch)
         .pipe(htmlhint('.htmlhintrc'))
         .pipe(htmlhint.reporter())
         .pipe(gulp.dest(function (file) {
@@ -114,7 +119,7 @@ gulp.task('htmlhint', function () {
 });
 
 gulp.task('jscs', function () {
-    return gulp.src('js/**/*.js')
+    return gulp.src(jsMatch)
         .pipe(jscs({ fix: true }))
         .pipe(gulp.dest(function (file) {
             return file.base;
@@ -122,7 +127,7 @@ gulp.task('jscs', function () {
 });
 
 gulp.task('jshint', function () {
-    return gulp.src('js/**/*.js')
+    return gulp.src(jsMatch)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default'));
 });
