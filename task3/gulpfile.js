@@ -120,7 +120,7 @@ gulp.task('htmlhint', function () {
 
 gulp.task('jscs', function () {
     return gulp.src(jsMatch)
-        .pipe(gulpIf(argv.all, gitmodified('modified')))
+        .pipe(gulpIf(!argv.all, gitmodified('modified')))
         .pipe(jscs({ fix: true }))
         .pipe(gulp.dest(function (file) {
             return file.base;
