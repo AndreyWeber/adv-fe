@@ -2,9 +2,6 @@
 
 const destDir = 'bin';
 
-// A.W.: Due to home task conditions I cannot imagine how to
-// implement this gulp task without negations. Have to be
-// discussed
 const htmlMatch = ['*.html', '!node_modules/**', '!libs/**', '!bin/**'];
 const imagesMatch = 'images/**/*.{png,jpg,svg}';
 const stylesMatch = 'styles/**/*.less';
@@ -28,6 +25,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
 const autoprefixer= require('gulp-autoprefixer');
+const gitmodified = require('gulp-gitmodified');
 
 // Commented to reduce load time. Uncomment on demand
 // const debug = require( 'gulp-debug' );
@@ -88,7 +86,7 @@ gulp.task('reload-page', function () {
 });
 
 gulp.task( 'clean', function () {
-    return gulp.src( destDir + '/*', { read: false } )
+    return gulp.src(destDir + '/*', { read: false })
         .pipe(clean({ force: true }));
 } );
 
@@ -103,6 +101,7 @@ gulp.task('watch', function () {
 
 gulp.task('csscomb', function () {
     return gulp.src(stylesMatch)
+        .pipe(gulpIf(!argv.all, gitmodified('modified')))
         .pipe(csscomb('.csscomb.json').on('error', handleError))
         .pipe(gulp.dest(function (file) {
             return file.base;
@@ -111,6 +110,7 @@ gulp.task('csscomb', function () {
 
 gulp.task('htmlhint', function () {
     return gulp.src(htmlMatch)
+        .pipe(gulpIf(!argv.all, gitmodified('modified')))
         .pipe(htmlhint('.htmlhintrc'))
         .pipe(htmlhint.reporter())
         .pipe(gulp.dest(function (file) {
@@ -120,6 +120,7 @@ gulp.task('htmlhint', function () {
 
 gulp.task('jscs', function () {
     return gulp.src(jsMatch)
+        .pipe(gulpIf(argv.all, gitmodified('modified')))
         .pipe(jscs({ fix: true }))
         .pipe(gulp.dest(function (file) {
             return file.base;
@@ -128,6 +129,7 @@ gulp.task('jscs', function () {
 
 gulp.task('jshint', function () {
     return gulp.src(jsMatch)
+        .pipe(gulpIf(!argv.all, gitmodified('modified')))
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default'));
 });
