@@ -101,7 +101,7 @@ gulp.task('watch', function () {
 
 gulp.task('csscomb', function () {
     return gulp.src(stylesMatch)
-        .pipe(gulpIf(!argv.all, gitmodified('modified')))
+        .pipe(gulpIf(!argv.all, getFilteredFiles()))
         .pipe(csscomb('.csscomb.json').on('error', handleError))
         .pipe(gulp.dest(function (file) {
             return file.base;
@@ -110,7 +110,7 @@ gulp.task('csscomb', function () {
 
 gulp.task('htmlhint', function () {
     return gulp.src(htmlMatch)
-        .pipe(gulpIf(!argv.all, gitmodified('modified')))
+        .pipe(gulpIf(!argv.all, getFilteredFiles()))
         .pipe(htmlhint('.htmlhintrc'))
         .pipe(htmlhint.reporter())
         .pipe(gulp.dest(function (file) {
@@ -120,7 +120,7 @@ gulp.task('htmlhint', function () {
 
 gulp.task('jscs', function () {
     return gulp.src(jsMatch)
-        .pipe(gulpIf(!argv.all, gitmodified('modified')))
+        .pipe(gulpIf(!argv.all, getFilteredFiles()))
         .pipe(jscs({ fix: true }))
         .pipe(gulp.dest(function (file) {
             return file.base;
@@ -129,7 +129,7 @@ gulp.task('jscs', function () {
 
 gulp.task('jshint', function () {
     return gulp.src(jsMatch)
-        .pipe(gulpIf(!argv.all, gitmodified('modified')))
+        .pipe(gulpIf(!argv.all, getFilteredFiles()))
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('default'));
 });
@@ -140,8 +140,14 @@ gulp.task('style', function () {
 
 // CODESTYLE //
 
+// Helper functions
+
 function handleError(err) {
     console.log(err.toString());
     this.emit('end');
     return this;
+}
+
+function getFilteredFiles () {
+    return gitmodified('modified');
 }
