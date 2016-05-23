@@ -16,21 +16,25 @@ module.exports = function UserWealth () {
         hateCount: 1
     });
 
-    function render () {
-        elem.html(App.templates['user-wealth']({}));
+    var resources = {};
+    resources[goldRes.name.toLocaleLowerCase()] = goldRes;
+    resources[copperRes.name.toLocaleLowerCase()] = copperRes;
 
-        // A.W: I wish to pass data to template to use {{#each}} inside,
-        //      but don't know how to do this
-        elem.find('.user-wealth__gold').html(goldRes.render().elem);
-        elem.find('.user-wealth__copper').html(copperRes.render().elem);
+    function render () {
+        elem.html(App.templates['user-wealth']({
+            resources: Object.keys(resources)
+        }));
+
+        Object.keys(resources).forEach(function (key) {
+            elem.find('.user-wealth__' + key + '-resource').html(resources[key].render().elem);
+        });
 
         return this;
     }
 
     return {
         render: render,
-        gold: goldRes,
-        copper: copperRes,
+        resources: resources,
         elem: elem
     };
 };

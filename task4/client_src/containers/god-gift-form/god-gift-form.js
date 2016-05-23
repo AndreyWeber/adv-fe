@@ -10,11 +10,11 @@ module.exports = function GodGiftForm() {
         hate: 32
     });
     var goldTuner = new GiftTuner({
-        resource: userWealth.gold,
+        resource: userWealth.resources['gold'],
         hateIndicator: godHateIndicator
     });
     var copperTuner = new GiftTuner({
-        resource: userWealth.copper,
+        resource: userWealth.resources['copper'],
         hateIndicator: godHateIndicator
     });
 
