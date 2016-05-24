@@ -1,6 +1,6 @@
 var Bar = require('components/bar/bar.js');
 
-module.exports = function GodLoveInicator(options) {
+module.exports = function GodHateIndicator(options) {
     var elem = $('<div></div>');
 
     var bar = new Bar({
