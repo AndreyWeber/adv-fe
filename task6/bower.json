@@ -1,0 +1,7 @@
+{
+  "name": "my_project",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "handlebars": "^3.x.x"
+  }
+}
