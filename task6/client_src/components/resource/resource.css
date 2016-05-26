@@ -1,4 +1,9 @@
 .resource {
-    padding-bottom: 10px;
-    padding-left: 5px;
+    &__name {
+        display: inline-block;
+    }
+    &__val {
+        display: inline-block;
+    }
 }
+

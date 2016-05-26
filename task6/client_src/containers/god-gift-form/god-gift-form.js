@@ -1,30 +1,45 @@
-var GiftTuner = require('containers/gift-tunner/gift-tunner.js');
+var GiftTunner = require('containers/gift-tunner/gift-tunner.js');
 var GodHateIndicator = require('containers/god-hate-indicator/god-hate-indicator.js');
-var UserWealth = require('containers/user-wealth/user-wealth.js');
+var Resource  = require('models/resource.js');
+var Hate = require('models/hate.js');
 
-module.exports = function GodGiftForm() {
+module.exports = function GodGiftForm(options) {
     var elem = $('<div></div>');
 
-    var userWealth = new UserWealth({});
+    var BASE_HATE = 50; // can be propogated from game
+    var resources = options.resources;
+
+    var hate = new Hate(BASE_HATE);
+
     var godHateIndicator = new GodHateIndicator({
-        hate: 32
+        hate: hate 
     });
-    var goldTuner = new GiftTuner({
-        resource: userWealth.resources['gold'],
-        hateIndicator: godHateIndicator
-    });
-    var copperTuner = new GiftTuner({
-        resource: userWealth.resources['copper'],
-        hateIndicator: godHateIndicator
-    });
+
+    // use it as map of gift impact 
+    var godPrefer = {
+        'gold': 6,
+        'copper': 2
+    }
+
+    // create tuner resources (resource model) tuneResource
+    // 
+    // create gift components(gift-tuner) with tunerResouce 
+    //
+    // subscribe on tuner resouces 
+    // onChange -> set changes in reseouce
+    //
+
+    // subscribe on tunner resoures
+    // onChange -> recalculate and set hate count
+    //
 
     function render() {
         elem.html(App.templates['god-gift-form']({}));
 
-        elem.find('.god-gift-form__user-wealth').html(userWealth.render().elem);
-        elem.find('.god-gift-form__gold-tuner').html(goldTuner.render().elem);
-        elem.find('.god-gift-form__copper-tuner').html(copperTuner.render().elem);
-        elem.find('.god-gift-form__hate').html(godHateIndicator.render().elem);
+//         elem.find('.god-gift-form__tunners').html(tunners.map(function(tunner) {
+//             return tunner.render().elem;
+//         }));
+//         elem.find('.god-gift-form__hate').html(godHateIndicator.render().elem);
 
         subscribeHandlers(elem);
 
@@ -33,7 +48,13 @@ module.exports = function GodGiftForm() {
 
     function subscribeHandlers(elem) {
         elem.find('.god-gift-form__send').click(function() {
-            console.log('send gift [gold: ' + goldTuner.getCount() + ', copper:' + copperTuner.getCount() + ']');
+            console.log(
+                'send gift [' + 
+                tunnerResources.map(function(resource) {
+                    return resource.getName() + ':' + resource.getCount()
+                }) +
+                ']'
+            );
         });
     }
 

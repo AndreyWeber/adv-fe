@@ -1,10 +1,10 @@
 var Bar = require('components/bar/bar.js');
 
-module.exports = function GodHateIndicator(options) {
+module.exports = function GodLoveInicator(options) {
     var elem = $('<div></div>');
 
     var bar = new Bar({
-        count: options.hate
+        model: options.hate
     });
 
     function render() {

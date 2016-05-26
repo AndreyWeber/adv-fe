@@ -1,6 +1,14 @@
+// espects model wiht getCount method
 module.exports = function Bar(options) {
     var elem = $('<div></div>');
-    var progress = options.count || 0;
+
+    var model = options.model;
+    var progress = model.getCount();
+
+    model.subscribe(function() {
+        progress = model.getCount();
+        render();
+    });
 
     function render() {
         elem.html(App.templates['bar']({
@@ -11,14 +19,6 @@ module.exports = function Bar(options) {
 
     return {
         render: render,
-        inc: function(count) {
-            progress += count || 1;
-            render();
-        },
-        dec: function(count) {
-            progress -= count || 1;
-            render();
-        },
         getCount: function() {
             return progress;
         },

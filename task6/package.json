@@ -2,10 +2,10 @@
   "name": "adv2",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
   "config": {
     "port": "3000"
   },
+  "main": "app.js",
   "scripts": {
     "dev": "gulp dev & node app.js",
     "start": "node app.js"

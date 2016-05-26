@@ -1,10 +1,9 @@
+// expects model whit inc, dec methods
+//
 module.exports = function TuneControls(options) {
     var elem = $('<div></div>');
 
-    var bar = options.bar; // <----
-    var hateIndicator = options.hateIndicator; // <----
-    var resource = options.resource;
-    var startAmount = resource.getAmount();
+    var model = options.model;
 
     function render() {
         elem.html(App.templates['tune-controls']({}));
@@ -15,18 +14,10 @@ module.exports = function TuneControls(options) {
 
     function subscribeHandlers() {
         elem.find('.tune-controls__inc').click(function() {
-            if (resource.getAmount() > 0) {
-                bar.inc(); // <----
-                hateIndicator.dec(resource.hateCount); // <----
-                resource.decAmount();
-            }
+            model.inc();
         });
         elem.find('.tune-controls__dec').click(function() {
-            if (resource.getAmount() < startAmount) {
-                bar.dec(); // <----
-                hateIndicator.inc(resource.hateCount); // <----
-                resource.incAmount();
-            }
+            model.dec();
         });
     }
 
