@@ -1,18 +1,18 @@
 (function (global) {
     function Model() {
-       this.attributes = {};    
+       this.attributes = {};
        this.subscribers = [];
        this.init.apply(this, arguments);
     }
 
     Model.prototype = {
         subscribe: function(cb) {
-            this.subscribers.push(cb); 
+            this.subscribers.push(cb);
         },
-        notify: function(cb) {
+        notify: function() {
             this.subscribers.forEach(function(cb) {
                 cb(this);
-            }.bind(this)); 
+            }.bind(this));
         },
         get: function(key) {
             return this.attributes[key];

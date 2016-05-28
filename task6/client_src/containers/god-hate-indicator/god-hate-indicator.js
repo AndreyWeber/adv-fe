@@ -1,6 +1,6 @@
 var Bar = require('components/bar/bar.js');
 
-module.exports = function GodLoveInicator(options) {
+module.exports = function GodLoveIndicator(options) {
     var elem = $('<div></div>');
 
     var bar = new Bar({
@@ -9,8 +9,8 @@ module.exports = function GodLoveInicator(options) {
 
     function render() {
         elem.html(App.templates['god-hate-indicator']({}));
-
         elem.find('.god-hate-indicator__bar').html(bar.render().elem);
+
         return this;
     }
 

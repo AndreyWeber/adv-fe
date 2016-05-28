@@ -8,13 +8,13 @@ module.exports = Model.createModel({
     },
     inc: function(count) {
         this.set(
-            'count', 
+            'count',
             this.get('count') + (count || 1)
         );
     },
     dec: function(count) {
         this.set(
-            'count', 
+            'count',
             this.get('count') - (count || 1)
         );
     },
@@ -27,4 +27,4 @@ module.exports = Model.createModel({
     setCount: function(count) {
         this.set('count', count);
     }
-})
+});
