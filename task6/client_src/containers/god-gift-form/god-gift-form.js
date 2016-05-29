@@ -61,10 +61,12 @@ module.exports = function GodGiftForm(options) {
 
     // subscribe on tuner resources
     // onChange -> recalculate and set hate count
-    Model.subscribeAll(tunerResources, function (r) {
-        var resCount = r.getCount() * godPrefer[r.getName().toLowerCase()];
-        var count = baseHate - resCount;
-        hate.setCount(count);
+    Model.subscribeAll(tunerResources, function () {
+        var resCount = 0;
+        tunerResources.forEach(function (r) {
+            resCount += r.getCount() * godPrefer[r.getName().toLowerCase()];
+        });
+        hate.setCount(baseHate - resCount);
     });
 
     function render() {
