@@ -65,7 +65,7 @@ module.exports = function GodGiftForm(options) {
         var resCount = r.getCount() * godPrefer[r.getName().toLowerCase()];
         var count = baseHate - resCount;
         hate.setCount(count);
-    } );
+    });
 
     function render() {
         elem.html(App.templates['god-gift-form']({}));

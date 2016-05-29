@@ -38,5 +38,4 @@
        child.prototype = $.extend({}, Model.prototype, custom);
        return child;
     };
-
 })(window);

@@ -7,7 +7,7 @@ module.exports = Model.createModel({
             maxCount: options.maxCount || options.count || 0
         });
     },
-    // A.W.: How to make this hidden, or like extension method?
+    // A.W.: How to get rid of copypaste?
     normalizeCount: function (count) {
         if (count < this.get('minCount')) {
             return this.get('minCount');
