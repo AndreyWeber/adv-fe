@@ -8,9 +8,6 @@ module.exports = function Resource(options) {
     // subscribe on resource
     resource.subscribe(function () {
         amount = resource.getCount();
-        if (amount < 0) {
-            amount = 0;
-        }
         render();
     });
 

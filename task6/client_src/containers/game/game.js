@@ -11,10 +11,14 @@ module.exports = function Game() {
     // e.g {count: 10, name: gold}
     var userGoldResource = new Resource({
         count: 10,
+        minCount: 0,
+        maxCount: 10,
         name: 'Gold'
     });
     var userCopperResource = new Resource({
         count: 15,
+        minCount: 0,
+        maxCount: 15,
         name: 'Copper'
     });
     var resources = [userGoldResource, userCopperResource];

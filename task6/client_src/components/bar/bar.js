@@ -7,9 +7,6 @@ module.exports = function Bar(options) {
 
     model.subscribe(function() {
         progress = model.getCount();
-        if (progress < 0) {
-            progress = 0;
-        }
         render();
     });
 

@@ -19,12 +19,18 @@ module.exports = function GodGiftForm(options) {
     var userHas = {};
 
     // create hate resource
-    var hate = new Hate(baseHate);
+    var hate = new Hate({
+        count: baseHate,
+        minCount: 0,
+        maxCount: baseHate
+    });
     // create tuner resources (resource model) tunerResources
     var tunerResources = resources.map(function (r) {
         userHas[r.getName().toLowerCase()] = r.getCount(); // preserve initial user resource value
         return new Resource({
             count: 0,
+            minCount: 0,
+            maxCount: r.getCount(),
             name: r.getName()
         });
     });
@@ -43,30 +49,23 @@ module.exports = function GodGiftForm(options) {
 
     // subscribe on tuner resources
     // onChange -> set changes in resource
-    tunerResources.forEach(function (tr) {
-        tr.subscribe(function (r) {
-            var userRes = $.grep(resources, function (ur) {
-                return ur.getName().toLowerCase() === r.getName().toLowerCase();
-            })[0];
-            var initCount = userHas[userRes.getName().toLowerCase()];
-            var count = initCount - r.getCount();
-            if (count <= initCount){
-                userRes.setCount(count);
-            }
-        });
+    Model.subscribeAll(tunerResources, function (r) {
+        var rName = r.getName().toLowerCase();
+        var userRes = $.grep(resources, function (ur) {
+            return ur.getName().toLowerCase() === rName;
+        })[0];
+        var initCount = userHas[rName];
+        var count = initCount - r.getCount();
+        userRes.setCount(count);
     });
 
     // subscribe on tuner resources
     // onChange -> recalculate and set hate count
-    tunerResources.forEach(function (tr) {
-        tr.subscribe(function (r) {
-            var resCount = r.getCount() * godPrefer[r.getName().toLowerCase()];
-            var count = baseHate - resCount;
-            if (count <= baseHate) {
-                hate.setCount(baseHate - resCount);
-            }
-        });
-    });
+    Model.subscribeAll(tunerResources, function (r) {
+        var resCount = r.getCount() * godPrefer[r.getName().toLowerCase()];
+        var count = baseHate - resCount;
+        hate.setCount(count);
+    } );
 
     function render() {
         elem.html(App.templates['god-gift-form']({}));
