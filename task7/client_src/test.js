@@ -1,10 +1,10 @@
 ;$(function () {
     "use strict";
 
-    function fetchAndParse(endpoint, parserCb) {
-        endpoint = endpoint || '';
+    function fetchAndParse(url, parserCb) {
+        url = url || '';
 
-        return fetch(endpoint)
+        return fetch(url)
             .then(function(response) {
                 console.log('status: ' + response.status + '; status text: ' + response.statusText +
                     '; url: ' + response.url);
@@ -52,33 +52,22 @@
     });
 
     // Get all comments to post with id = 466, output value on the page
-    var allComments = [];
-    var allUsers = [];
-    var promises = [];
-    promises.push(fetchAndParse('json-server/posts/466', function (post) {
+    fetchAndParse('json-server/posts/466', function (post) {
         post = post || {};
-        allComments = post.hasOwnProperty('comments') ? post.comments : [];
-    }));
-
-    // A.W.: I didn't understand how to organize chain of promises or
-    //       user Promise.all/Promise.race to fetch users with requests like
-    //      '/json-server/users/{id}'. Clarification needed.
-    promises.push(fetchAndParse('/json-server/users/', function (users) {
-        allUsers = users || [];
-    }));
-
-    Promise.all(promises).then(function () {
-        return allComments.map(function (comment) {
-            var user = $.grep(allUsers, function (u) {
-                return u.id === comment.user;
-            })[0];
-            comment.user = user.name;
-
-            return comment.user + ': ' + comment.text;
-        });
+        return post.hasOwnProperty('comments') ? post.comments : [];
     }).then(function (comments) {
         comments = comments || [];
-
-        $('.content__all-comments').html(comments.join('; '));
+        return comments.map(function (comment) {
+            return fetchAndParse('/json-server/users/' + comment.user, function (user) {
+                comment.user = user.name;
+                return comment;
+            });
+        });
+    }).then(function (promises) {
+        Promise.all(promises).then(function (comments) {
+            $('.content__all-comments').html(comments.map(function (c) {
+                return c.user + ': ' + c.text;
+            }).join('; '));
+        });
     });
 });
