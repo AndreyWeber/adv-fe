@@ -49,24 +49,28 @@ module.exports = function GodGiftForm(options) {
 
     // subscribe on tuner resources
     // onChange -> set changes in resource
-    Model.subscribeAll(tunerResources, function (r) {
+    function updateResCount (r) {
         var rName = r.getName().toLowerCase();
-        var userRes = $.grep(resources, function (ur) {
-            return ur.getName().toLowerCase() === rName;
-        })[0];
+        var userRes = resources.find(ur => ur.getName().toLowerCase() === rName);
         var initCount = userHas[rName];
         var count = initCount - r.getCount();
         userRes.setCount(count);
-    });
+    }
 
     // subscribe on tuner resources
     // onChange -> recalculate and set hate count
-    Model.subscribeAll(tunerResources, function () {
+    function updateHateCount () {
         var resCount = 0;
         tunerResources.forEach(function (r) {
             resCount += r.getCount() * godPrefer[r.getName().toLowerCase()];
         });
         hate.setCount(baseHate - resCount);
+    }
+
+    Model.subscribeAll(tunerResources, function (resource) {
+        updateResCount(resource);
+        updateHateCount();
+
     });
 
     function render() {
