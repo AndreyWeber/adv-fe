@@ -1,5 +1,4 @@
-// expects model whit inc, dec methods
-//
+// expects model with inc, dec methods
 module.exports = function TuneControls(options) {
     var elem = $('<div></div>');
 
