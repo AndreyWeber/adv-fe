@@ -21,21 +21,14 @@ module.exports = function Game() {
         .then(function (jsonObj) {
             // create resources
             // e.g {count: 10, name: gold}
-            var gold = jsonObj.resources.find(e => e.name === 'gold').count;
-            var copper = jsonObj.resources.find(e => e.name === 'copper').count;
-            var resources = [];
-            resources.push(new Resource({
-                count: gold,
-                minCount: 0,
-                maxCount: gold,
-                name: 'Gold'
-            }));
-            resources.push(new Resource({
-                count: copper,
-                minCount: 0,
-                maxCount: copper,
-                name: 'Copper'
-            }));
+            var resources = jsonObj.resources.map(function (res) {
+                return new Resource({
+                    count: res.count,
+                    minCount: 0,
+                    maxCount: res.count,
+                    name: res.name
+                });
+            });
 
             // create GodGiftForm
             giftForm = new GodGiftForm({

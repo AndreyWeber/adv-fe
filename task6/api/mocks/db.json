@@ -1,8 +1,8 @@
 {
     "wealth": {
         "resources": [
-            {"name": "gold", "count": 20},
-            {"name": "copper", "count": 13}
+            {"name": "Gold", "count": 20},
+            {"name": "Copper", "count": 13}
         ]
     }
 }
