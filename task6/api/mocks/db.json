@@ -1,0 +1,8 @@
+{
+    "wealth": {
+        "resources": [
+            {"name": "Gold", "count": 20},
+            {"name": "Copper", "count": 13}
+        ]
+    }
+}

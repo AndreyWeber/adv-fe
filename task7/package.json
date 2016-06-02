@@ -1,7 +1,6 @@
 {
-  "name": "adv2",
-  "version": "1.0.0",
-  "description": "",
+  "name": "my-blog",
+  "version": "0.0.1",
   "config": {
     "port": "3000"
   },
@@ -11,7 +10,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.13.4",
+    "express": "^4.13.3",
     "json-server": "^0.8.8"
   },
   "devDependencies": {
@@ -31,7 +30,6 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-cssnano": "^2.1.1",
     "yargs": "^4.1.0",
-    "gulp-browserify": "^0.5.1",
-    "ct-creator": "*"
+    "gulp-browserify": "^0.5.1"
   }
 }
