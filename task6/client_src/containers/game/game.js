@@ -7,34 +7,45 @@ module.exports = function Game() {
 
     const BASE_HATE = 50;
 
-    // create resources 
-    // e.g {count: 10, name: gold}
-    var userGoldResource = new Resource({
-        count: 10,
-        minCount: 0,
-        maxCount: 10,
-        name: 'Gold'
-    });
-    var userCopperResource = new Resource({
-        count: 15,
-        minCount: 0,
-        maxCount: 15,
-        name: 'Copper'
-    });
-    var resources = [userGoldResource, userCopperResource];
+    // get resources
+    var giftForm = {};
+    var userWealth = {};
+    var gamePromise = fetch('json-server/wealth')
+        .then(function(response) {
+            console.log('status: ' + response.status + '; status text: ' + response.statusText +
+                '; url: ' + response.url);
+            return response.json()
+        }, function (reason) {
+            console.log('rejected with the next reason: ' + reason);
+        })
+        .then(function (jsonObj) {
+            // create resources
+            // e.g {count: 10, name: gold}
+            var resources = jsonObj.resources.map(function (res) {
+                return new Resource({
+                    count: res.count,
+                    minCount: 0,
+                    maxCount: res.count,
+                    name: res.name
+                });
+            });
 
-    // create GodGiftForm
-    var giftForm = new GodGiftForm({
-        resources: resources,
-        baseHate: BASE_HATE
-    });
+            // create GodGiftForm
+            giftForm = new GodGiftForm({
+                resources: resources,
+                baseHate: BASE_HATE
+            });
 
-    // create UserWealth
-    var userWealth = new UserWealth({
-        resources: resources
-    });
+            // create UserWealth
+            userWealth = new UserWealth({
+                resources: resources
+            });
+        })
+        .catch(function(ex) {
+            console.log('JSON parsing failed', ex);
+        });
 
-    function render() {
+    function render () {
         elem.html(App.templates['game']({}));
 
         elem.find('.game__god-gift-form').html(giftForm.render().elem);
@@ -44,7 +55,8 @@ module.exports = function Game() {
     }
 
     return {
-        render: render,
-        elem: elem
+        gamePromise: gamePromise,
+        elem: elem,
+        render: render
     }
 };

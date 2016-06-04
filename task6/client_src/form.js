@@ -1,3 +1,7 @@
 var Game = require('containers/game/game.js');
 
-$('.content').html(new Game().render().elem);
+var game = new Game();
+
+Promise.all([game.gamePromise]).then(function () {
+    $('.content').html(game.render().elem);
+});
