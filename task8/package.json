@@ -1,7 +1,13 @@
 {
   "name": "snapshot",
   "version": "1.0.1",
+  "config": {
+    "port": "5000"
+  },
   "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "body-parser": "^1.14.2",
     "errorhandler": "^1.4.3",
@@ -9,7 +15,8 @@
     "express-session": "^1.13.0",
     "morgan": "^1.6.1",
     "nconf": "^0.8.2",
-    "winston": "^2.1.1"
+    "winston": "^2.1.1",
+    "findit": "^2.0.0"
   },
   "devDependencies": {
     "browserify": "^12.0.1",
@@ -25,8 +32,5 @@
     "gulp-wrap": "^0.11.0",
     "handlebars": "^4.0.5",
     "run-sequence": "^1.1.5"
-  },
-  "scripts": {
-    "start": "node app.js"
   }
 }
