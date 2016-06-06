@@ -16,7 +16,8 @@
     "morgan": "^1.6.1",
     "nconf": "^0.8.2",
     "winston": "^2.1.1",
-    "findit": "^2.0.0"
+    "findit": "^2.0.0",
+    "rmdir": "^1.2.0"
   },
   "devDependencies": {
     "browserify": "^12.0.1",

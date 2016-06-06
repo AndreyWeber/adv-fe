@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var url = require('url');
 var find = require('findit');
+var rmdir = require('rmdir');
 var apiVersion = require('./package').version;
 
 var app = express();
@@ -49,7 +50,7 @@ function renderSeveral (req, res) {
 
     var finder = find(dirPath);
     var output = [];
-    finder.on('directory', function (dir, stat, stop) {
+    finder.on('directory', function (dir) {
         if (dirPath === dir) {
             return;
         }
@@ -64,7 +65,7 @@ function renderSeveral (req, res) {
                 output.push(json);
             }
         } catch (e) {
-            console.log('File not found', filePath);
+            console.log('Error occured', e);
         }
     });
 
@@ -75,7 +76,7 @@ function renderSeveral (req, res) {
         res
             .status(200)
             .json(output)
-            .end();1
+            .end();
     });
 
     finder.on('error', function (err) {
@@ -83,20 +84,62 @@ function renderSeveral (req, res) {
 
         res
             .status(500)
-            .json([
-                {
-                    "info": {
-                        "success": false,
-                        "code": 12345
-                    }
-                }
-            ])
+            .json([{
+                "status": "fail",
+                "error": err.toString()
+            }])
             .end();
 
     });
 }
 
 function renderSingle(req, res) {
+    switch (req.method.toLowerCase()) {
+        case 'get':
+            getSingle(req, res);
+            break;
+        case 'delete':
+            deleteSingle(req, res);
+            break;
+        default:
+            res
+                .status(404)
+                .json([{
+                    "status": "fail"
+                }])
+                .end();
+    }
+}
+
+function deleteSingle (req, res) {
+    var dirName = req.path.replace('/' + apiVersion + '/', '/');
+    var dirPath = path.join(__dirname, dirName);
+
+    rmdir(dirPath, function (err) {
+        if (err) {
+            console.log('Error occured', err.toString());
+
+            res
+                .status(404)
+                .json([{
+                    "status": "fail"
+                }])
+                .end();
+
+            return;
+        }
+
+        console.log('Directory ' + dirPath + ' deleted');
+        res
+            .status(200)
+            .json([{
+                "status": "success"
+            }])
+            .end();
+    });
+}
+
+function getSingle (req, res) {
     var fileName = req.path + '/' + req.method.toLowerCase() + '.json';
     //   /api/1.0.1/users/get.json
     fileName = fileName.replace('/' + apiVersion + '/', '/');
@@ -112,32 +155,13 @@ function renderSingle(req, res) {
         res.setHeader('content-type', 'application/json');
         fs.createReadStream(filePath).pipe(res);
     } catch (e) {
-        console.log('no such file', filePath);
+        console.log('Error occured', e);
 
         res
             .status(404)
-            .json([
-                {
-                    "info": {
-                        "success": false,
-                        "code": 12345
-                    }
-                }
-            ])
+            .json([{
+                "status": "fail"
+            }])
             .end();
     }
 }
-
-//
-//app.get('/api/1.0/users', function (req, res) {
-//    res.send(users);
-//});
-//
-//app.get('/api/1.0/users/:userId', function (req, res) {
-//
-//    console.log(req.query);
-//
-//    res.send(user);
-//});
-
-
