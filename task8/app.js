@@ -60,7 +60,7 @@ function renderSeveral (req, res) {
 
             var json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             if (Array.isArray(json)){
-                json.forEach(e => output.push(e));
+                Array.prototype.push.apply(output, json);
             } else {
                 output.push(json);
             }
@@ -70,6 +70,7 @@ function renderSeveral (req, res) {
     });
 
     finder.on('end', function () {
+        console.log(req.method, dirPath);
         console.log('Succeeded');
 
         res.setHeader('content-type', 'application/json');
@@ -129,7 +130,7 @@ function deleteSingle (req, res) {
             return;
         }
 
-        console.log('Directory ' + dirPath + ' deleted');
+        console.log('Success. Directory ' + dirPath + ' deleted');
         res
             .status(200)
             .json([{
@@ -154,6 +155,8 @@ function getSingle (req, res) {
 
         res.setHeader('content-type', 'application/json');
         fs.createReadStream(filePath).pipe(res);
+
+        console.log('Succeeded');
     } catch (e) {
         console.log('Error occured', e);
 
