@@ -2,9 +2,13 @@
   "name": "adv2",
   "version": "1.0.0",
   "description": "",
+  "config": {
+    "port": "3000"
+  },
   "main": "app.js",
   "scripts": {
-    "dev": "gulp dev & node app.js"
+    "dev": "gulp dev & node app.js",
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "^4.13.4"
