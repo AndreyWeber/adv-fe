@@ -5,14 +5,12 @@ describe('happiness', function () {
         this.happines = new Happiness();
     });
 
-
     describe('set method ', function () {
         beforeEach(function() {
             spyOn(this.happines, 'add').and.callThrough();
             spyOn(this.happines, 'remove');
         });
 
-        
         it('should be defined', function () {
             expect(this.happines.set).toBeDefined();
             debugger;
@@ -27,8 +25,6 @@ describe('happiness', function () {
         it('should call add method', function () {
             this.happines.set([{ getCount: function () { return 4; }}]);
             expect(this.happines.add).toHaveBeenCalledWith(4);
-
-
         });
 
         it('should call add method with correct arguments', function () {
