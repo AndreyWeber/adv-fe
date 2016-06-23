@@ -1,14 +1,34 @@
 describe('page ', function () {
 
     var baseGodHate;
-    var resCoolnesses = {};
+
+    var testResource = function (resNum, resCoolness) {
+        console.log(this.baseGodHate);
+
+        var godHateSelector = '.god-hate-indicator__bar .bar';
+        var nthIncTuner = '.god-gift-form__tunners > div:nth-child(' + resNum + ') .tune-controls__inc';
+        var nthDecTuner = '.god-gift-form__tunners > div:nth-child(' + resNum + ') .tune-controls__dec';
+
+        var hateBefore = browser.getText(godHateSelector);
+        expect(hateBefore.length).toBe(baseGodHate);
+
+        browser.click(nthIncTuner);
+
+        var hateAfter = browser.getText(godHateSelector);
+        expect(hateAfter.length).toBe(baseGodHate - resCoolness);
+
+        browser.click(nthDecTuner);
+
+        hateAfter = browser.getText(godHateSelector);
+        expect(hateAfter.length).toBe(baseGodHate);
+    };
 
     beforeAll(function () {
         baseGodHate = 50;
 
-        resCoolnesses.goldCoolness = 6;
-        resCoolnesses.copperCoolness = 2;
-        resCoolnesses.someCoolness = 1;
+        this.goldCoolness = 6;
+        this.copperCoolness = 2;
+        this.someCoolness = 1;
     });
 
     beforeEach(function () {
@@ -32,34 +52,15 @@ describe('page ', function () {
         expect(resAfter).toBe('19');
     });
 
-    function testResource (resNum, resCoolness) {
-        var godHateSelector = '.god-hate-indicator__bar .bar';
-        var nthIncTuner = '.god-gift-form__tunners > div:nth-child(' + resNum + ') .tune-controls__inc';
-        var nthDecTuner = '.god-gift-form__tunners > div:nth-child(' + resNum + ') .tune-controls__dec';
-
-        var hateBefore = browser.getText(godHateSelector);
-        expect(hateBefore.length).toBe(baseGodHate);
-
-        browser.click(nthIncTuner);
-
-        var hateAfter = browser.getText(godHateSelector);
-        expect(hateAfter.length).toBe(baseGodHate - resCoolness);
-
-        browser.click(nthDecTuner);
-
-        hateAfter = browser.getText(godHateSelector);
-        expect(hateAfter.length).toBe(baseGodHate);
-    }
-
-    it('Gold should change God hate', function () {
-        testResource(1, resCoolnesses.goldCoolness);
+    it('gold should change God hate', function () {
+        testResource(1, this.goldCoolness);
     });
 
-    it('Copper should change God hate', function () {
-        testResource(2, resCoolnesses.copperCoolness);
+    it('copper should change God hate', function () {
+        testResource(2, this.copperCoolness);
     });
 
-    it('Some should change God hate', function () {
-        testResource(3, resCoolnesses.someCoolness);
+    it('some should change God hate', function () {
+        testResource(3, this.someCoolness);
     });
 });

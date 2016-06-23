@@ -32,6 +32,5 @@ describe('happiness', function () {
             this.happines.set([{ getCount: function () { return 1 } } ]);
             expect(this.happines.remove).toHaveBeenCalledWith(3);
         });
-
     });
 });
