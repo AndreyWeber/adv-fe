@@ -24,17 +24,12 @@ describe('bar', function () {
     });
 
     describe('getCount', function () {
-        beforeEach(function () {
-            spyOn(this.bar, 'getCount').and.callThrough();
-        });
-
         it('should be defined', function () {
             expect(this.bar.getCount).toBeDefined();
         });
 
         it('should return predefined progress value = ' + barProgress, function () {
             var count = this.bar.getCount();
-            expect(this.bar.getCount).toHaveBeenCalled(); // This is not required, just to practice
             expect(count).toEqual(barProgress);
         });
     });
@@ -55,9 +50,6 @@ describe('bar', function () {
 
         it('should return this bar', function () {
             var bar = this.bar.render();
-            expect(bar).not.toBeNull();
-            expect(bar).toBeDefined();
-            expect(bar).toEqual(jasmine.any(Object));
             expect(bar).toBe(this.bar);
         });
     });
