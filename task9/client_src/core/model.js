@@ -1,18 +1,18 @@
 (function (global) {
     function Model() {
-       this.attributes = {};    
+       this.attributes = {};
        this.subscribers = [];
        this.init.apply(this, arguments);
     }
 
     Model.prototype = {
         subscribe: function(cb) {
-            this.subscribers.push(cb); 
+            this.subscribers.push(cb);
         },
-        notify: function(cb) {
+        notify: function() {
             this.subscribers.forEach(function(cb) {
-                cb();
-            }); 
+                cb(this);
+            }.bind(this));
         },
         get: function(key) {
             return this.attributes[key];
@@ -24,7 +24,7 @@
         init: function() {
             console.log('init');
         }
-    }
+    };
     global.Model = Model;
     Model.subscribeAll = function(models, cb) {
         models.forEach(function(model) {
@@ -34,9 +34,8 @@
     Model.createModel = function(custom) {
        var child = function() {
            return Model.apply(this, arguments);
-       }
-       child.prototype = $.extend(Model.prototype, custom)
+       };
+       child.prototype = $.extend({}, Model.prototype, custom);
        return child;
     };
-
 })(window);

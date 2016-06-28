@@ -1,5 +1,5 @@
-// espects model wiht getCount method
-module.exports = function Bar(options) {
+// expects model with getCount method
+module.exports = function Bar() {
     var elem = $('<div></div>');
 
     var count = 0;
@@ -13,19 +13,19 @@ module.exports = function Bar(options) {
 
     return {
         render: render,
-        getCount: function() {
+        getCount: function () {
             return count;
         },
-        setCount: function(c) {
-            count = c;
+        setCount: function (c) {
+            count = (!c || c < 0) ? 0 : c;
             render();
         },
-        inc: function() {
-            count++;
+        inc: function (c) {
+            count += c;
             render();
         },
-        dec: function() {
-            count--;
+        dec: function (c) {
+            count = (count - c) >= 0 ? count - c : 0;
             render();
         },
         elem: elem
