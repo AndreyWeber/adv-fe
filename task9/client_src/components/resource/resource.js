@@ -20,6 +20,9 @@ module.exports = function Resource() {
             resName = name;
             render();
         },
+        getName: function (name) {
+            return resName;
+        },
         setAmount: function (amount) {
             resAmount = amount;
             render();

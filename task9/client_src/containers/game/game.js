@@ -30,15 +30,16 @@ module.exports = function Game() {
                 });
             });
 
-            // create GodGiftForm
-            giftForm = new GodGiftForm({
-                resources: resources,
-                baseHate: BASE_HATE
-            });
-
             // create UserWealth
             userWealth = new UserWealth({
                 resources: resources
+            });
+
+            // create GodGiftForm
+            giftForm = new GodGiftForm({
+                resources: resources,
+                baseHate: BASE_HATE,
+                userWealth: userWealth
             });
         })
         .catch(function(ex) {

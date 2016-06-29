@@ -24,6 +24,15 @@ module.exports = function UserWealth(options) {
 
     return {
         render: render,
+        update: function () {
+            ctResources.forEach(function (ctRes) {
+                var res = resources.filter(function (r) {
+                    return r.getName().toLowerCase() === ctRes.getName().toLowerCase();
+                });
+                ctRes.setAmount(res[0].getCount());
+            });
+            render();
+        },
         elem: elem
     }
 };

@@ -7,6 +7,7 @@ module.exports = function GodGiftForm(options) {
 
     var baseHate = options.baseHate || 10; // propagated from game
     var resources = options.resources || [];
+    var userWealth = options.userWealth || {};
 
     // use it as map of gift impact
     var godPrefer = {
@@ -48,6 +49,7 @@ module.exports = function GodGiftForm(options) {
         var initCount = userHas[rName];
         var count = initCount - r.getCount();
         userRes.setCount(count);
+        userWealth.update();
     }
 
     // subscribe on tuner resources
@@ -68,7 +70,7 @@ module.exports = function GodGiftForm(options) {
 
     function render() {
         elem.html(App.templates['god-gift-form']({}));
-
+        
         elem.find('.god-gift-form__tunners').html(tuners.map(function(tuner) {
             return tuner.render().elem;
         }));
