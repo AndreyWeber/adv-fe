@@ -1,6 +1,5 @@
-// expects model whit inc, dec methods
-//
-module.exports = function TuneControls(options) {
+// expects model with inc, dec methods
+module.exports = function TuneControls() {
     var elem = $('<div></div>');
 
     var onIncCallback;
@@ -17,7 +16,6 @@ module.exports = function TuneControls(options) {
         elem.find('.tune-controls__inc').click(function() {
             onIncCallback();
         });
-
         elem.find('.tune-controls__dec').click(function() {
             onDecCallback();
         });
@@ -25,10 +23,10 @@ module.exports = function TuneControls(options) {
 
     return {
         render: render,
-        onInc: function(cb) {
+        onInc: function (cb) {
             onIncCallback = cb;
         },
-        onDec: function(cb) {
+        onDec: function (cb) {
             onDecCallback = cb;
         },
         elem: elem
