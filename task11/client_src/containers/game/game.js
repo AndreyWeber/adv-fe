@@ -29,8 +29,8 @@ module.exports = function Game() {
 
     function render() {
         elem.html(App.templates['game']({}));
-        elem.find('.game__god-gift-form').html(giftForm.render().elem)
-        elem.find('.game__wealth').html(userWealth.render().elem)
+        elem.find('.game__god-gift-form').html(giftForm.render().elem);
+        elem.find('.game__wealth').html(userWealth.render().elem);
         return this;
     }
 

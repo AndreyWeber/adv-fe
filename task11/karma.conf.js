@@ -31,7 +31,6 @@ module.exports = function (config) {
             'client_build/**/*spec.js': ['browserify'],
         },
 
-
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -52,7 +51,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['Chrome'], // [PhantomJs]
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -62,4 +61,4 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity
     })
-}
+};
