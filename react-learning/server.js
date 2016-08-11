@@ -20,7 +20,8 @@ var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 
 app.set('port', (process.env.PORT || process.env.npm_package_config_port));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+//app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'client_build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -70,7 +71,6 @@ app.post('/api/comments', function(req, res) {
         });
     });
 });
-
 
 app.listen(app.get('port'), function() {
     console.log('Server started: http://localhost:' + app.get('port') + '/');

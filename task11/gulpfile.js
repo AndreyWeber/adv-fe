@@ -30,8 +30,8 @@ gulp.task('dev', ['build'], function (cb) {
 
 gulp.task('build', function (cb) {
     runSequence( 
-        'clean-build', 
-        'copy-src', 
+        'clean-build',
+        'copy-src',
         ['bower', 'browserify', 'templates', 'concat-component-css'],
         cb 
     );

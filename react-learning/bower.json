@@ -1,0 +1,9 @@
+{
+  "name": "my-react-tutorial",
+  "dependencies": {
+    "react": "^15.3.0",
+    "babel": "^5.8.38",
+    "jquery": "^3.1.0",
+    "remarkable": "^1.6.2"
+  }
+}
